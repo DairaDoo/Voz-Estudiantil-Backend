@@ -1,7 +1,10 @@
 <h1 align="center">Voz Estudiantil</h1>
 
 <!-- ![Logo de Voz Estudiantil](ruta/a/tu/logo.png)  <!-- Opcional: Agrega un logo -->
-![Logo de Voz Estudiantil](https://res.cloudinary.com/dcldzjq9s/image/upload/v1729701349/d4mmoeti5eteyge5rrew.png)  <!-- Opcional: Agrega un logo -->
+<!-- Opcional: Agrega un logo -->
+<p align="center">
+  <img src="https://res.cloudinary.com/dcldzjq9s/image/upload/v1729701349/d4mmoeti5eteyge5rrew.png" alt="Logo de Voz Estudiantil" width="300px"/> <!-- Cambia el valor de width según lo necesites -->
+</p>
 <p align="center">
   <img src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/045/633/original/Coding_Cat.gif?1662445143" alt="Gato programando" height=200px width=200px>
 </p>
