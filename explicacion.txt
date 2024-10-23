@@ -1,0 +1,94 @@
+Cómo iniciar el entorno virtual (venv)
+Importante estar ubicado en la ruta correcta!
+Crear un entorno virtual: Esto crea un entorno separado para tu proyecto:
+
+comando: python -m venv venv
+
+
+Activar el entorno virtual:
+
+comando: Windows: .\venv\Scripts\activate
+comando: Linux/Mac: source venv/bin/activate
+
+Instalar dependencias: Si ya tienes un archivo requirements.txt
+(que contiene todas las librerías necesarias para el proyecto), 
+puedes instalar todo de una vez con:
+
+comando: pip install -r requirements.txt
+
+
+Desactivar el entorno virtual: Cuando termines de trabajar, puedes
+desactivar el entorno con:
+
+comando: deactivate
+
+
+Explicación de los archivos y carpetas:
+
+app.py: Este es el punto de entrada de tu aplicación. Aquí es donde se inicializa Flask y se configuran rutas básicas. Piensa en esto como el "controlador principal" de tu aplicación.
+
+config.py: Contiene la configuración de la aplicación (como las claves secretas, conexiones a bases de datos, o el modo de desarrollo). Es como el archivo de configuración que le dice a tu aplicación cómo comportarse en diferentes entornos.
+
+.env: Un archivo donde almacenas variables de entorno como claves secretas, configuraciones
+ de bases de datos y otras cosas que no quieres exponer en el código. Ejemplo:
+
+Ejemplo .env: FLASK_APP=app.py
+Ejemplo .env: SECRET_KEY=mysecretkey
+
+models/: Esta carpeta contiene los modelos de base de datos. Los modelos definen las tablas de la base de datos y cómo se estructura la información. Si estás usando SQLAlchemy, aquí defines tus clases que representan tablas en la base de datos.
+
+resources/: Aquí defines los controladores que manejan las peticiones a tu API. Cada archivo representa un conjunto de rutas relacionadas, como /users, /posts, etc. Es el "puente" entre el cliente y la lógica de negocio.
+
+schemas/: Aquí defines esquemas usando Marshmallow, que te ayudan a serializar (convertir) los objetos de Python en JSON y validar los datos que recibes en tus peticiones.
+
+utils/: Aquí van las funciones auxiliares o utilidades que no pertenecen a ninguna otra carpeta, pero que son usadas en varias partes de la app. Son como herramientas pequeñas que puedes usar repetidamente.
+
+extensions/: Aquí se inicializan las extensiones que la aplicación pueda necesitar, como la conexión a la base de datos (SQLAlchemy), Marshmallow, autenticación, etc. Es como una caja de herramientas que hace que la app funcione correctamente.
+
+requirements.txt: Este archivo contiene una lista de las librerías que tu proyecto necesita. Si alguien más quiere ejecutar tu proyecto, puede instalar todo con el comando pip install -r requirements.txt.
+
+.gitignore: Es una lista de archivos que Git debe ignorar. Esto es útil para
+no subir cosas innecesarias (como el entorno virtual venv/, archivos .env, etc.).
+Un ejemplo común:
+
+
+Ejemplo .gitignore:
+.venv/
+.env
+__pycache__/
+
+Ejecutar programa: 
+para ejecutar se usa el comando: python run.py
+
+
+Resumen de la Estructura de la Aplicación:
+
+app.py: Define y configura la aplicación, incluyendo la inicialización de las rutas y la conexión a la base
+de datos.
+
+config.py: Contiene la configuración de la aplicación, incluyendo parámetros de comportamiento
+y ajustes específicos.
+
+.env: Almacena variables de entorno secretas y configuraciones sensibles que no deberían estar
+directamente en el código fuente.
+
+models/: Define las tablas y estructuras de la base de datos, describiendo cómo se almacenarán los datos.
+
+routes/: Gestiona las rutas de la API, controlando las acciones de cada endpoint y la lógica relacionada.
+
+schemas/: Facilita la conversión entre datos en formato JSON y objetos de Python, ayudando en la validación
+y serialización.
+
+utils/: Incluye funciones auxiliares reutilizables que son útiles en varias partes de la aplicación,
+promoviendo la DRY (Don't Repeat Yourself).
+
+requirements.txt: Especifica las librerías y dependencias necesarias para ejecutar la aplicación.
+
+.gitignore: Enumera los archivos y carpetas que no deben ser rastreados por Git, asegurando
+que no se suban archivos sensibles o innecesarios, como run.py, __init__.py, y otros en las carpetas de routes, schemas, models y utils.
+
+__init__.py: Indica que el directorio debe ser tratado como un paquete de Python. Puede contener
+inicializaciones de variables o configuraciones que deben ejecutarse cuando se importa el paquete.
+
+run.py: Script de arranque que importa la función create_app desde app.py y la ejecuta para iniciar
+la aplicación. Facilita el proceso de desarrollo y permite lanzar la aplicación localmente.
