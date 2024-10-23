@@ -1,10 +1,11 @@
 <h1 align="center">Voz Estudiantil</h1>
 
 <p align="center">
-  <img src="https://res.cloudinary.com/dcldzjq9s/image/upload/v1729701349/d4mmoeti5eteyge5rrew.png" alt="Logo de Voz Estudiantil" width="250px"/> <!-- Ajusta el tamaño según lo necesites -->
+  <img src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/045/633/original/Coding_Cat.gif?1662445143" alt="Gato programando" height="250px" width="250px" padding="10px">
 </p>
-<p align="center">
-  <img src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/045/633/original/Coding_Cat.gif?1662445143" alt="Gato programando" height="200px" width="200px">
+
+<p align="right" style="margin-right: 50px;">
+  <img src="https://res.cloudinary.com/dcldzjq9s/image/upload/v1729701349/d4mmoeti5eteyge5rrew.png" alt="Logo de Voz Estudiantil" width="150px"/> <!-- Ajusta el tamaño según lo necesites -->
 </p>
 
 ## 📚 Descripción
@@ -34,8 +35,8 @@ Proporcionar un espacio donde los estudiantes puedan expresar inquietudes y cont
 | Nombre                        | Rol               |
 |-------------------------------|------------------|
 | Dairan S. De Jesús Mora       | Desarrollador     |
-| Lara V. Codero Rodríguez      | Diseñadora        |
-| Ian P. Padua Cuevas          | Tester            |
+| Lara V. Codero Rodríguez      | Desarrollador        |
+| Ian P. Padua Cuevas          | Desarollador            |
 
 ---
 
