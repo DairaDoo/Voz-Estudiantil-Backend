@@ -2,7 +2,7 @@ Cómo iniciar el entorno virtual (venv)
 Importante estar ubicado en la ruta correcta!
 Crear un entorno virtual: Esto crea un entorno separado para tu proyecto:
 
-comando: python -m venv venv
+comando: python -m venv venv < ESTO YA SE HIZO
 
 
 Activar el entorno virtual:
@@ -42,8 +42,6 @@ resources/: Aquí defines los controladores que manejan las peticiones a tu API.
 schemas/: Aquí defines esquemas usando Marshmallow, que te ayudan a serializar (convertir) los objetos de Python en JSON y validar los datos que recibes en tus peticiones.
 
 utils/: Aquí van las funciones auxiliares o utilidades que no pertenecen a ninguna otra carpeta, pero que son usadas en varias partes de la app. Son como herramientas pequeñas que puedes usar repetidamente.
-
-extensions/: Aquí se inicializan las extensiones que la aplicación pueda necesitar, como la conexión a la base de datos (SQLAlchemy), Marshmallow, autenticación, etc. Es como una caja de herramientas que hace que la app funcione correctamente.
 
 requirements.txt: Este archivo contiene una lista de las librerías que tu proyecto necesita. Si alguien más quiere ejecutar tu proyecto, puede instalar todo con el comando pip install -r requirements.txt.
 
