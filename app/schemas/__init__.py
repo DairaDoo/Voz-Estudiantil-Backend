@@ -1,1 +1,14 @@
 # Importa y organiza los esquemas
+from campus_schema import CampusSchema
+from comment_schema import CommentSchema
+from department_schema import DepartmentSchema
+from event_schema import EventSchema
+from moderation_schema import ModerationSchema
+from professor_question_schema import ProfessorQuestionSchema
+from professor_response_schema import ProfessorResponseSchema
+from professor_schema import ProfessorSchema
+from report_category_schema import ReportCategorySchema
+from report_schema import ReportSchema
+from review_schema import ReviewSchema
+from university_schema import UniversitySchema
+from user_schema import UserSchema
