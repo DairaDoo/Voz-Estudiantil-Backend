@@ -12,9 +12,6 @@ class Review(db.Model):
     create_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)  # Obligatorio
     up_vote = db.Column(db.Integer, nullable=True)  # Opcional
     down_vote = db.Column(db.Integer(50), nullable=True)  # Obpcional
-    university_id = db.Column(db.Integer(50),unique=True nullable=False) # Obligatorio
+    university_id = db.Column(db.Integer,unique=True, nullable=False) # Obligatorio
     state = db.Column(db.Varchar(50),nullable=False)
-
-    def __repr__(self):
-        return f'<User {self.name}, Email: {self.email}>'
 

@@ -11,7 +11,7 @@ class Event(db.Model):
     create_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)  # Obligatorio
     up_vote = db.Column(db.Integer, nullable=True)  # Opcional
     user_id = db.Column(db.Integer(50), nullable=False)  #Referencia a la tabla user_id 
-    university_id = db.Column(db.Integer(50),unique=True nullable=False) #Referencia a la tabla university_id
+    university_id = db.Column(db.Integer,unique=True, nullable=False) #Referencia a la tabla university_id
     state = db.Column(db.Varchar(50),nullable=False) #Estado de revision
     image_name = db.Column(db.Varchar(200), nullable=True) #No es obligatorio
 
