@@ -6,4 +6,4 @@ class Comment(db.Model):
     comment_id = db.Column(db.Integer, unique=True, primary_key=True)  # Clave primaria
     review_id = db.Column(db.Integer, unique=True, nullable=False)  # Obligatorio y único
     comment = db.Column(db.Text(100), nullable=False)  # Obligatorio
-    user_id = db.Column(db.Integer)  
+    user_id = db.Column(db.Integer, nullable=False)  # Obligatorio

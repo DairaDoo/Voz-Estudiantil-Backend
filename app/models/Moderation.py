@@ -1,11 +1,13 @@
+import datetime
 from utils import db
 
 class Moderation(db.Model):
     __tablename__ = 'Moderation'
     
     moderation_id = db.Column(db.Integer,unique=True, primary_key=True)  # Clave primaria
-    item_id = db.Column(db.Integer)  
-    tipo = db.Column(db.Varchar(100), nullable=False)  # Obligatorio
-    password = db.Column(db.String(200), nullable=False)  # Obligatorio
-    university_id = db.Column(db.Integer, nullable=True)  # Opcional
-    rol = db.Column(db.String(50), nullable=False)  # Obligatorio
+    related_content_id = db.Column(db.Integer) # Integer, se refiere al id del contenido (eventos, profesores o reseñas).
+    content_type = db.Column(db.Varchar(100), nullable=False)  # Obligatorio, tipo contenido revisado (eventos, profesores o reseñas)
+    state = db.Column(db.Boolean, nullable=True) # Estado de la petición (pendiente, aprobado o rechazado).
+    rejection_reason = db.Column(db.Text(100), nullable=True) # Opcional, razón de rechazo.
+    user_id = db.Column(db.Integer) # id del moderador (referencia a User).
+    revision_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False) # día que se realizó la revsión, obligatoro.
