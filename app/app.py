@@ -1,5 +1,4 @@
 from flask import Flask, jsonify
-
 import datetime
 
 def create_app():
@@ -10,8 +9,5 @@ def create_app():
     @app.route('/')
     def home():
         return "Hola Mundo ( Ruta De Testing )"
-    
-    
-        
     
     return app
