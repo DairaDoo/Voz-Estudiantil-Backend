@@ -1,6 +1,5 @@
 from utils import db
 
-
 class Report_category(db.Model):
     __tablename__ = 'Report_category'
     

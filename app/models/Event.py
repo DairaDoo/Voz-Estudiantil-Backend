@@ -1,5 +1,6 @@
 import datetime
 from utils import db
+from sqlalchemy import Enum
 
 
 class Event(db.Model):
@@ -12,7 +13,7 @@ class Event(db.Model):
     up_vote = db.Column(db.Integer, nullable=True)  # Opcional
     user_id = db.Column(db.Integer(50), nullable=False)  #Referencia a la tabla user_id 
     university_id = db.Column(db.Integer, nullable=False) #Referencia a la tabla university_id, no unique ya que varios eventos pueden ser de la misma universidad.
-    state = db.Column(db.Varchar(50), nullable=False) # Obligatorio, Estado de revision
+    state = db.Column(Enum('pendiente', 'aprobado', 'rechazado', name='state_enum'), default='pendiente', nullable=False) # Obligatorio, Estado de revision
     image_name = db.Column(db.Varchar(200), nullable=True) # No es obligatorio
 
     def __repr__(self):
