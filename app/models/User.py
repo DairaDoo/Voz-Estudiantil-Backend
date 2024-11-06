@@ -17,7 +17,7 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)  # Obligatorio
     create_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)  # Obligatorio
     university_id = db.Column(db.Integer, db.ForeignKey('University.university_id'), nullable=True)  # Opcional y clave foránea
-    rol = db.Column(db.Enum(RoleEnum), nullable=False)  # Obligatorio y con valores del Enum
+    rol = db.Column(db.Enum(RoleEnum), nullable=False, default=RoleEnum.usuario)  # Default a 'usuario', los moderadores y admin se crearán con SQL no en el register.
     
     def __repr__(self):
         return f'<User {self.name}, Email: {self.email}>'
