@@ -9,7 +9,7 @@ class Review(db.Model):
     review_id = db.Column(db.Integer, primary_key=True, unique=True)  # Clave primaria
     review = db.Column(db.Text(120), nullable=False)  # Obligatorio
     user_id = db.Column(db.Integer(100), nullable=False)  # Obligatorio
-    image_name = db.Column(db.Varchar(200), nullable=True)  # Opcional
+    image_name = db.Column(db.String(200), nullable=True)  # Opcional
     create_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)  # Obligatorio
     up_vote = db.Column(db.Integer, nullable=True)  # Opcional
     down_vote = db.Column(db.Integer(50), nullable=True)  # Opcional
