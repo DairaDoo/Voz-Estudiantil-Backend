@@ -8,4 +8,4 @@ class University(db.Model):
     campus_id = db.Column(db.Integer, unique=True, nullable=False)  # Obligatorio y único
 
     # Relaciones (puedes agregar otras relaciones si es necesario, como con los 'Departments')
-    campuses = db.relationship('Campus', backref='university', lazy=True)
+    campus = db.relationship('Campus', backref='university', lazy=True)
