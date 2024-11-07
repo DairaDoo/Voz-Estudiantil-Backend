@@ -1,8 +1,10 @@
 from utils import db
+from utils.enum_utils import state_enum
 
 class Campus(db.Model):
     __tablename__ = 'Campus'
+    
     campus_id = db.Column(db.Integer, unique=True, primary_key=True)  # Clave primaria
     name = db.Column(db.String(50), db.ForeignKey('Universities.university_id'), unique=True, nullable=False)  # Obligatorio y único
     
-    university = db.relationship('University', backref='campuses', lazy=True) # Relacion de tablas
+    university_id = db.relationship('University', backref='campuses', lazy=True)  # Relación con 'University'
