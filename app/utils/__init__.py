@@ -1,2 +1,2 @@
 # Módulo de utilidades
-from db import db
+from .db import db
