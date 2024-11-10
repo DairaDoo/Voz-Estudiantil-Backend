@@ -1,4 +1,4 @@
-from utils import db
+from app.utils.db import db
 
 class University(db.Model):
     __tablename__ = 'University'

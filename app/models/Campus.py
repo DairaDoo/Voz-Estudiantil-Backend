@@ -1,4 +1,4 @@
-from utils import db
+from app.utils.db import db
 from utils.enum_utils import state_enum
 
 class Campus(db.Model):

@@ -1,6 +1,6 @@
 import datetime
 from enum import Enum
-from utils import db
+from app.utils.db import db
 
 class User(db.Model):
     __tablename__ = 'Users'

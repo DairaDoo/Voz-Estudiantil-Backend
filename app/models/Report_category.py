@@ -1,4 +1,4 @@
-from utils import db
+from app.utils.db import db
 
 class Report_category(db.Model):
     __tablename__ = 'Report_category'

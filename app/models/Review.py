@@ -1,5 +1,5 @@
 import datetime
-from utils import db
+from app.utils.db import db
 from utils.enum_utils import state_enum  # Importa el Enum
 
 class Review(db.Model):
