@@ -4,7 +4,6 @@ from config import Config, TestingConfig
 from flask_migrate import Migrate
 from .utils.db import db
 from dotenv import load_dotenv
-import os
 
 # Load environment variables
 load_dotenv()
