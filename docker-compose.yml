@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://voz_estudiantil_user:XJq1zZcmlaoGd4Tumb5JeGAqQrrXuGUc@db:5432/voz_estudiantil_db_hd1d
+    volumes:
+      - .:/app
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: voz_estudiantil_user
+      POSTGRES_PASSWORD: voz_estudiantil_password
+      POSTGRES_DB: voz_estudiantil_db_hd1d
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
