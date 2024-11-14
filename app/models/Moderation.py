@@ -1,6 +1,7 @@
 import datetime
 from app.utils.db import db
-from utils.enum_utils import state_enum  # Importa el Enum
+from utils.enum_utils import state_enum  
+  # Importa el Enum
 
 class Moderation(db.Model):
     __tablename__ = 'Moderation'

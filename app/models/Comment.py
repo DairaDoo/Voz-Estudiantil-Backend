@@ -1,5 +1,6 @@
 from app.utils.db import db
-from utils.enum_utils import state_enum
+from app.utils.enum_utils import state_enum  
+
 
 class Comment(db.Model):
     __tablename__ = 'Comment'
@@ -11,3 +12,6 @@ class Comment(db.Model):
     
     review_id = db.relationship('Review', backref='comments', lazy=True)  # Relación con 'Review'
     user_id = db.relationship('User', backref='comments', lazy=True)  # Relación con 'User'
+
+def __repr__(self):
+        return f"<Comment {self.id} - {self.state}>"

@@ -1,7 +1,10 @@
 from flask import Flask
 from config import Config
 from flask_migrate import Migrate
-from app.utils.utils import db  # Asegúrate de que utils.py contiene la instancia de db de SQLAlchemy
+from .utils.db import db  # Correcta referencia de importación # Asegúrate de que utils.py contiene la instancia de db de SQLAlchemy
+from app.models import Campus, Department, Event, Moderation, Professors_Questions, Professors_Responses, Report_category, Report, Professors, Review, University, User
+
+
 
 def create_app():
     app = Flask(__name__)
@@ -21,8 +24,4 @@ def create_app():
         return "Hola Mundo (Ruta De Testing)"
     
     return app
-
-if __name__ == '__main__':
-    app = create_app()
-    app.run(debug=True)
 

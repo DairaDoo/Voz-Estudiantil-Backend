@@ -1,6 +1,7 @@
 import datetime
 from app.utils.db import db
-from utils.enum_utils import state_enum  # Importa el Enum
+from utils.enum_utils import state_enum  
+  # Importa el Enum
 
 class Review(db.Model):
     __tablename__ = 'Review'

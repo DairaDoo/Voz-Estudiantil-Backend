@@ -1,2 +1,3 @@
 # Módulo de utilidades
-from .db import db
+from app.utils.db import db
+from .enum_utils import state_enum
