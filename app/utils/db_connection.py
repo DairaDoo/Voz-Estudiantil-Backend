@@ -1,7 +1,7 @@
 import psycopg2
 
 # URL de conexión a la base de datos
-DATABASE_URL = 'postgresql://voz_estudiantil_user:XJq1zZcmlaoGd4Tumb5JeGAqQrrXuGUc@db:5432/voz_estudiantil_db_hd1d'
+DATABASE_URL = 'postgresql://postgres.auqgonswvvsvdakrwsga:voz_estudiantil_password@aws-0-us-west-1.pooler.supabase.com:6543/postgres'
 
 def get_db_connection():
     """

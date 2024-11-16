@@ -18,3 +18,12 @@ def create_user_route():
 
     except Exception as e:
         return jsonify({"error": "Error interno del servidor", "details": str(e)}), 500
+
+# aquí van los otros endpoint
+@user_routes.route('/users/rutafalsa', methods=['GET'])
+def ruta_falsa():
+    return jsonify(
+        {
+            "Saludo": "Hola Mundo!"
+        }
+    ), 400
