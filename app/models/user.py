@@ -1,6 +1,7 @@
 import psycopg2
 from psycopg2 import sql
 from app.utils.db_connection import get_db_connection
+import bcrypt
 
 # Función para crear un usuario
 def create_user(data):
@@ -54,5 +55,48 @@ def create_user(data):
             connection.close()
 
 
-def update_user_data(data):
-    pass
+# Función para obtener un usuario por su correo electrónico
+def get_user_by_email(email):
+    try:
+        connection = get_db_connection()  # Reemplaza con tu conexión a la base de datos
+        cursor = connection.cursor()
+
+        query = sql.SQL("SELECT user_id, email, password, name FROM users WHERE email = %s")
+        cursor.execute(query, (email,))
+        
+        user = cursor.fetchone()  # Esto devuelve una fila con los datos del usuario
+        cursor.close()
+        connection.close()
+
+        if user:
+            # Imprimir para depurar
+            print(f"Tipo de dato de la contraseña: {type(user[2])}")
+            print(f"Contraseña almacenada: {user[2]}")
+
+            return {
+                "user_id": user[0],
+                "email": user[1],
+                "password": user[2],  # Aquí debe ser un string
+                "name": user[3]
+            }
+        return None  # Si no hay usuario, devolver None
+    except Exception as e:
+        print(f"Error al obtener el usuario: {e}")
+        return None
+
+    
+def verify_user_password(email, password):
+    user = get_user_by_email(email)
+    
+    if user:
+        db_password = user['password']
+        
+        # Verifica que la contraseña almacenada es un string
+        if isinstance(db_password, str):
+            if bcrypt.checkpw(password.encode('utf-8'), db_password.encode('utf-8')):
+                return user  # Si las credenciales son correctas, devolvemos el usuario
+        else:
+            raise ValueError("La contraseña recuperada de la base de datos no es válida.")
+    
+    return None  # Si no son correctas, devolvemos None
+

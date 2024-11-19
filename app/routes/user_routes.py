@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.models.user import create_user
+from app.models.user import create_user, verify_user_password
 from app.schemas.user_schema import UserSchema
 import bcrypt  # Importamos bcrypt para el hashing de contraseñas
 
@@ -43,3 +43,35 @@ def ruta_falsa():
             "Saludo": "Hola Mundo!"
         }
     ), 400
+
+
+@user_routes.route('/users/login', methods=['POST'])
+def login_user_route():
+    """
+    Endpoint para iniciar sesión de un usuario.
+    """
+    try:
+        # Obtener los datos del cuerpo de la solicitud (correo y contraseña)
+        data = request.get_json()
+        print(f"Datos recibidos: {data}")  # Imprimir datos para depurar
+        email = data.get('email')
+        password = str(data.get('password'))
+
+        if not email or not password:
+            return jsonify({"error": "Correo electrónico o contraseña son requeridos"}), 400
+
+        # Verificar las credenciales del usuario
+        user = verify_user_password(email, password)
+        
+        if user:
+            # Si las credenciales son correctas, devolver una respuesta positiva
+            return jsonify({"message": "Login exitoso", "user_id": user['user_id'], "name": user['name']}), 200
+        else:
+            # Si las credenciales son incorrectas, devolver un error
+            return jsonify({"error": "Credenciales incorrectas"}), 401
+
+    except Exception as e:
+        return jsonify({"error": "Error interno del servidor", "details": str(e)}), 500
+
+    
+    
