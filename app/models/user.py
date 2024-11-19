@@ -36,7 +36,7 @@ def create_user(data):
             data['name'],
             data['password'],
             university_id,
-            rol
+            rol,
         )
 
         cursor.execute(query, values)
@@ -52,3 +52,7 @@ def create_user(data):
     finally:
         if connection:
             connection.close()
+
+
+def update_user_data(data):
+    pass
