@@ -57,6 +57,7 @@ def create_user(data):
 
 # Función para obtener un usuario por su correo electrónico
 def get_user_by_email(email):
+    """Busca la data del usuario utilizando el email."""
     try:
         connection = get_db_connection()  # Reemplaza con tu conexión a la base de datos
         cursor = connection.cursor()
@@ -86,6 +87,7 @@ def get_user_by_email(email):
 
     
 def verify_user_password(email, password):
+    """Verifica que el password sea el mismo que el de la base de datos."""
     user = get_user_by_email(email)
     
     if user:
