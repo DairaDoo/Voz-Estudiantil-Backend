@@ -1,3 +1,13 @@
+10 DE NOVIEMBRE 2024
+
+IS IDENTYTY AÑADIDO A user_id de la tabla users
+esto es para que se autoincremente y no tener que 
+añadirle su id manualmente o evitar la necesidad
+de pasarle un id al crear un user.
+
+
+--------------------------------
+
 20 NOVIEMBRE DE 2024
 ---------------------------------   
 Resumen de cambios realizados
@@ -33,4 +43,12 @@ WHERE university_id = 1;
 
 ---------------------------------------------------
 
-????
+24 NOVIEMBRE DE 2024
+
+IS IDENTITY AÑADIDO A review_id de la tabla Review.
+ESTO ES PARA AUTOINCREMENTO DEL ID.
+
+----------------------------------------------------
+
+
+???
