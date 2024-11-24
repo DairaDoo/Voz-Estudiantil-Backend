@@ -10,6 +10,7 @@ class UserRoutes:
         self._register_routes()
 
     def _register_routes(self):
+        """Registra las rutas asociadas con los usuarios."""
         self.blueprint.add_url_rule('/users/create_user', view_func=self.create_user_route, methods=['POST'])
         self.blueprint.add_url_rule('/users/login', view_func=self.login_user_route, methods=['POST'])
         self.blueprint.add_url_rule('/users/rutafalsa', view_func=self.ruta_falsa, methods=['GET'])
