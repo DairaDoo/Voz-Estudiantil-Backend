@@ -18,9 +18,16 @@ def create_user(data):
     if len(data['password']) < 6:
         raise ValueError("La contraseña debe tener al menos 6 caracteres")
 
-    # Valores opcionales
-    university_id = data.get('university_id', None)
-    rol = data.get('rol', 'usuario')
+    # Convertir strings vacíos a None (NULL en PostgreSQL)
+    email = data['email'] if data['email'] != "" else None
+    name = data['name'] if data['name'] != "" else None
+    password = data['password'] if data['password'] != "" else None
+    university_id = data.get('university_id', None)  # Deja university_id como None si no está presente
+    rol = data.get('rol', 'usuario')  # 'usuario' por defecto si no se pasa rol
+
+    # Imprimir el JSON recibido para depuración
+    print(f"Datos recibidos para crear el usuario: {data}")
+    print(f"Datos procesados antes de la inserción: {email}, {name}, {password}, {university_id}, {rol}")
 
     connection = None
     try:
@@ -33,9 +40,9 @@ def create_user(data):
         VALUES (%s, %s, %s, %s, %s, NOW()) RETURNING user_id;
         """
         values = (
-            data['email'],
-            data['name'],
-            data['password'],
+            email,
+            name,
+            password,
             university_id,
             rol,
         )
@@ -53,6 +60,7 @@ def create_user(data):
     finally:
         if connection:
             connection.close()
+
 
 
 # Función para obtener un usuario por su correo electrónico

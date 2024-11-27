@@ -7,7 +7,7 @@ class UserSchema(Schema):
     name = fields.Str(required=True, validate=validate.Length(max=50))  # Obligatorio
     password = fields.Str(required=True, load_only=True)  # Obligatorio, solo escritura
     create_date = fields.Date(required=False)  # Opcional (se pasa en el mismo Query usando el NOW())
-    university_id = fields.Int(required=False)  # Opcional
+    university_id = fields.Int(required=False, allow_none=True)  # Aquí se marca como opcional
     
 class LoginSchema(Schema):
     """Esquema para logear un usuario."""

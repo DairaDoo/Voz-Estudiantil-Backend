@@ -26,11 +26,17 @@ class UserRoutes:
             # Validar y deserializar los datos usando UserSchema
             schema = UserSchema()
             validated_data = schema.load(data)
-            
+
+            # Hash de la contraseña
             password = validated_data.get('password')
             if password:
-                hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())  # Crear el hash de la contraseña
-                validated_data['password'] = hashed_password.decode('utf-8')  # Reemplazar la contraseña con el hash
+                hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+                validated_data['password'] = hashed_password.decode('utf-8')
+
+            # Manejar university_id nulo
+            university_id = validated_data.get('university_id')
+            if not university_id:
+                validated_data['university_id'] = None
 
             # Crear el usuario usando los datos validados
             result = create_user(validated_data)
@@ -43,6 +49,8 @@ class UserRoutes:
 
         except Exception as e:
             return jsonify({"error": "Error interno del servidor", "details": str(e)}), 500
+
+
 
     def login_user_route(self):
         """
