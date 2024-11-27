@@ -6,6 +6,20 @@ import datetime
 class ReviewModel:
     def __init__(self):
         self.connection = get_db_connection()
+        
+        
+        
+    def get_all_reviews(self):
+        """
+        Obtiene todas las reseñas.
+        """
+        try:
+            with self.connection.cursor(cursor_factory=RealDictCursor) as cursor:
+                cursor.execute("SELECT * FROM Review")
+                return cursor.fetchall()
+        except psycopg2.Error as e:
+            raise Exception(f"Error al obtener las reseñas: {e}")
+
 
     def get_review(self, review_id):
         """

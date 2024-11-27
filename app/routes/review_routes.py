@@ -15,6 +15,7 @@ class ReviewRoutes:
         self._register_routes()
 
     def _register_routes(self):
+        self.blueprint.add_url_rule('/reviews', view_func=self.get_all_reviews_route, methods=['GET'])
         self.blueprint.add_url_rule('/reviews/<int:review_id>', view_func=self.get_review_route, methods=['GET'])
         self.blueprint.add_url_rule('/reviews', view_func=self.create_review_route, methods=['POST'])
         self.blueprint.add_url_rule('/reviews/<int:review_id>', view_func=self.update_review_route, methods=['PUT'])
@@ -32,6 +33,18 @@ class ReviewRoutes:
             return response.get("public_id")  # Guardar solo el identificador
         except Exception as e:
             raise Exception(f"Error al subir la imagen: {e}")
+        
+        
+    def get_all_reviews_route(self):
+        """
+        Obtiene todas las reseñas.
+        """
+        try:
+            reviews = self.model.get_all_reviews()
+            return jsonify(reviews), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
 
     def get_review_route(self, review_id):
         """
