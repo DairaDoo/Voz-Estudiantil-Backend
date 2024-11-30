@@ -31,6 +31,36 @@ class ReviewModel:
                 return cursor.fetchone()
         except psycopg2.Error as e:
             raise Exception(f"Error al obtener la reseña: {e}")
+        
+    def get_all_reviews_with_names(self):
+        """"Ruta que devuelve todos los reviews pero aquí en vez de retornar los id devuelve los nombres asociados a otras tablas."""
+        """
+        Obtiene todas las reseñas con los nombres de las universidades y usuarios en lugar de sus IDs.
+        """
+        try:
+            with self.connection.cursor(cursor_factory=RealDictCursor) as cursor:
+                cursor.execute("""
+                    SELECT 
+                        r.review_id,
+                        r.review,
+                        r.image_name,
+                        r.create_date,
+                        r.up_vote,
+                        r.down_vote,
+                        r.state,
+                        u.name AS user_name,
+                        un.name AS university_name
+                    FROM 
+                        Review r
+                    INNER JOIN 
+                        users u ON r.user_id = u.user_id
+                    INNER JOIN 
+                        universities un ON r.university_id = un.university_id
+                """)
+                return cursor.fetchall()
+        except psycopg2.Error as e:
+            raise Exception(f"Error al obtener las reseñas: {e}")
+
 
     def create_review(self, review_data):
         query = """

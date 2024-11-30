@@ -50,5 +50,6 @@ ESTO ES PARA AUTOINCREMENTO DEL ID.
 
 ----------------------------------------------------
 
+29 de Noviembre de 2024
 
-???
+Se debe agregar la columna title en la base de datos en la tabla de Review.

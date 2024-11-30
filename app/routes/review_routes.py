@@ -20,6 +20,7 @@ class ReviewRoutes:
         self.blueprint.add_url_rule('/reviews', view_func=self.create_review_route, methods=['POST'])
         self.blueprint.add_url_rule('/reviews/<int:review_id>', view_func=self.update_review_route, methods=['PUT'])
         self.blueprint.add_url_rule('/reviews/<int:review_id>', view_func=self.delete_review_route, methods=['DELETE'])
+        self.blueprint.add_url_rule('/reviews_with_names', view_func=self.get_reviews_with_names_route, methods=['GET'])
 
     def _upload_image_to_cloudinary(self, image_file):
         """
@@ -44,6 +45,17 @@ class ReviewRoutes:
             return jsonify(reviews), 200
         except Exception as e:
             return jsonify({"error": str(e)}), 500
+        
+    def get_reviews_with_names_route(self):
+        """
+        Obtiene todas las reseñas con los nombres de las universidades y usuarios.
+        """
+        try:
+            reviews = self.model.get_all_reviews_with_names()  # Asegúrate de tener este método en ReviewModel
+            return jsonify(reviews), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
 
 
     def get_review_route(self, review_id):
