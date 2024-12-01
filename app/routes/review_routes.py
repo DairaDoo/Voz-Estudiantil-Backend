@@ -5,6 +5,7 @@ from marshmallow import ValidationError
 import cloudinary.uploader
 import os
 import datetime
+from app.utils.auth import token_required
 
 
 class ReviewRoutes:

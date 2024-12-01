@@ -1,8 +1,11 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from app.models.user import create_user, verify_user_password
 from app.schemas.user_schema import UserSchema, LoginSchema
 from marshmallow import ValidationError
 import bcrypt
+import jwt
+from datetime import datetime, timedelta
+
 
 class UserRoutes:
     def __init__(self):
@@ -57,30 +60,40 @@ class UserRoutes:
         Endpoint para iniciar sesión de un usuario.
         """
         try:
-            # Obtener y validar los datos del cuerpo de la solicitud
             data = request.get_json()
             schema = LoginSchema()
-            validated_data = schema.load(data)  # Validar datos
-            
+            validated_data = schema.load(data)
+
             email = validated_data['email']
             password = validated_data['password']
 
-            # Verificar las credenciales del usuario
             user = verify_user_password(email, password)
-            
+
             if user:
-                # Si las credenciales son correctas, devolver una respuesta positiva
-                return jsonify({"message": "Log in exitoso", "user_id": user['user_id'], "name": user['name']}), 200
+                # Obtener SECRET_KEY desde la configuración de Flask
+                secret_key = current_app.config["SECRET_KEY"]
+
+                # Generar un token JWT
+                payload = {
+                    "user_id": user['user_id'],
+                    "exp": datetime.utcnow() + timedelta(hours=24)
+                }
+                token = jwt.encode(payload, secret_key, algorithm="HS256")
+
+                return jsonify({
+                    "message": "Log in exitoso",
+                    "token": token,
+                    "user_id": user['user_id'],
+                    "name": user['name']
+                }), 200
             else:
-                # Si las credenciales son incorrectas, devolver un error
                 return jsonify({"error": "Credenciales incorrectas"}), 401
 
         except ValidationError as ve:
-            # Manejar errores de validación
             return jsonify({"error": "Datos inválidos", "details": ve.messages}), 400
         except Exception as e:
-            # Manejar errores internos del servidor
             return jsonify({"error": "Error interno del servidor", "details": str(e)}), 500
+
 
     def ruta_falsa(self):
         """
