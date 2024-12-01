@@ -6,9 +6,7 @@ import datetime
 class ReviewModel:
     def __init__(self):
         self.connection = get_db_connection()
-        
-        
-        
+
     def get_all_reviews(self):
         """
         Obtiene todas las reseñas.
@@ -19,7 +17,6 @@ class ReviewModel:
                 return cursor.fetchall()
         except psycopg2.Error as e:
             raise Exception(f"Error al obtener las reseñas: {e}")
-
 
     def get_review(self, review_id):
         """
@@ -47,9 +44,9 @@ class ReviewModel:
                         r.up_vote,
                         r.down_vote,
                         r.state,
-                        u.name AS user_name,
-                        un.name AS university_name,
-                        c.name AS campus_name  -- Nombre del campus
+                        u.name AS user_name,         -- Nombre del usuario
+                        un.name AS university_name, -- Nombre de la universidad asociada a la reseña
+                        c.name AS campus_name       -- Nombre del campus
                     FROM 
                         Review r
                     INNER JOIN 
@@ -57,14 +54,27 @@ class ReviewModel:
                     INNER JOIN 
                         universities un ON r.university_id = un.university_id
                     LEFT JOIN 
-                        campus c ON r.campus_id = c.id  -- JOIN con la tabla campuses
+                        campus c ON r.campus_id = c.id -- JOIN con la tabla de campus
                 """)
                 return cursor.fetchall()
         except psycopg2.Error as e:
             raise Exception(f"Error al obtener las reseñas con nombres: {e}")
 
-
-
+    def get_reviews_by_user(self, user_id):
+        """
+        Obtiene todas las reseñas asociadas a un usuario específico.
+        """
+        try:
+            with self.connection.cursor(cursor_factory=RealDictCursor) as cursor:
+                cursor.execute("""
+                    SELECT * 
+                    FROM Review 
+                    WHERE user_id = %s
+                """, (user_id,))
+                return cursor.fetchall()
+        except psycopg2.Error as e:
+            raise Exception(f"Error al obtener las reseñas del usuario: {e}")
+    
     def create_review(self, review_data):
         query = """
         INSERT INTO Review (review, user_id, image_name, create_date, up_vote, down_vote, university_id, state, campus_id)
@@ -88,8 +98,6 @@ class ReviewModel:
                 return cursor.fetchone()[0]
         except psycopg2.Error as e:
             raise Exception(f"Error al crear la reseña: {e}")
-
-
 
     def update_review(self, review_id, review_data):
         """
@@ -120,7 +128,45 @@ class ReviewModel:
         """
         try:
             with self.connection.cursor() as cursor:
-                cursor.execute("DELETE FROM Review WHERE review_id = %s", (review_id,))
+                cursor.execute("DELETE FROM review WHERE review_id = %s", (review_id,))
                 self.connection.commit()
         except psycopg2.Error as e:
             raise Exception(f"Error al eliminar la reseña: {e}")
+        
+    def update_votes(self, review_id, vote_type):
+        """
+        Actualiza los votos de una reseña.
+        """
+        if vote_type == 'up':
+            query = "UPDATE review SET up_vote = up_vote + 1 WHERE review_id = %s"
+        elif vote_type == 'down':
+            query = "UPDATE review SET down_vote = down_vote + 1 WHERE review_id = %s"
+        else:
+            raise Exception("Tipo de voto inválido.")
+        
+        try:
+            with self.connection.cursor() as cursor:
+                cursor.execute(query, (review_id,))
+                self.connection.commit()
+        except psycopg2.Error as e:
+            raise Exception(f"Error al actualizar los votos: {e}")
+
+    def get_total_votes(self, review_id):
+        """
+        Calcula el total de votos netos (up_vote - down_vote).
+        """
+        query = """
+        SELECT 
+            up_vote - down_vote AS total_votes 
+        FROM 
+            review 
+        WHERE 
+            review_id = %s
+        """
+        try:
+            with self.connection.cursor(cursor_factory=RealDictCursor) as cursor:
+                cursor.execute(query, (review_id,))
+                result = cursor.fetchone()
+                return result['total_votes'] if result else None
+        except psycopg2.Error as e:
+            raise Exception(f"Error al calcular el total de votos: {e}")

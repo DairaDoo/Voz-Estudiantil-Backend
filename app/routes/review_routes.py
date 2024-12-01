@@ -21,6 +21,9 @@ class ReviewRoutes:
         self.blueprint.add_url_rule('/reviews/<int:review_id>', view_func=self.update_review_route, methods=['PUT'])
         self.blueprint.add_url_rule('/reviews/<int:review_id>', view_func=self.delete_review_route, methods=['DELETE'])
         self.blueprint.add_url_rule('/reviews_with_names', view_func=self.get_reviews_with_names_route, methods=['GET'])
+        self.blueprint.add_url_rule( '/reviews/<int:review_id>/votes', view_func=self.update_review_votes_route,methods=['PUT'])
+        self.blueprint.add_url_rule('/reviews/<int:review_id>/votes', view_func=self.get_review_votes_route,methods=['GET'])
+    
 
     def _upload_image_to_cloudinary(self, image_file):
         """
@@ -139,6 +142,38 @@ class ReviewRoutes:
             return jsonify({"message": "Reseña eliminada"}), 200
         except Exception as e:
             return jsonify({"error": str(e)}), 500
+        
+    
+    def update_review_votes_route(self, review_id):
+        """
+        Actualiza los votos de una reseña (up_vote o down_vote).
+        """
+        try:
+            data = request.get_json()
+            vote_type = data.get('type')
+
+            if vote_type not in ['up', 'down']:
+                return jsonify({"error": "Tipo de voto inválido"}), 400
+
+            self.model.update_votes(review_id, vote_type)
+            return jsonify({"message": f"{vote_type}_vote actualizado correctamente"}), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
+        
+    def get_review_votes_route(self, review_id):
+        """
+        Obtiene el total de votos netos (up_vote - down_vote) de una reseña.
+        """
+        try:
+            votes = self.model.get_total_votes(review_id)
+            if votes is None:
+                return jsonify({"error": "Reseña no encontrada"}), 404
+
+            return jsonify({"total_votes": votes}), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
 
 
 # Inicializar y exportar las rutas
