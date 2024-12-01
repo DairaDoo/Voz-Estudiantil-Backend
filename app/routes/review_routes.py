@@ -77,6 +77,8 @@ class ReviewRoutes:
         try:
             # Obtener datos enviados
             data = request.form.to_dict()
+            
+            # Validación de datos
             validated_data = self.schema.load(data)
 
             # Manejar subida de imagen si se envía
@@ -89,6 +91,9 @@ class ReviewRoutes:
             # Establecer valores predeterminados
             validated_data['create_date'] = datetime.datetime.utcnow()
 
+            # Si no se ha pasado un campus_id, se establece como None
+            validated_data['campus_id'] = data.get('campus_id', None)
+
             # Crear reseña en la base de datos
             new_review_id = self.model.create_review(validated_data)
             return jsonify({"message": "Reseña creada", "review_id": new_review_id}), 201
@@ -97,6 +102,7 @@ class ReviewRoutes:
             return jsonify({"error": "Datos inválidos", "details": ve.messages}), 400
         except Exception as e:
             return jsonify({"error": str(e)}), 500
+
 
     def update_review_route(self, review_id):
         """
@@ -111,6 +117,10 @@ class ReviewRoutes:
                 image_file = request.files['image']
                 validated_data['image_name'] = self._upload_image_to_cloudinary(image_file)
 
+            # Si el campus es proporcionado, actualizarlo
+            if 'campus_id' in data:
+                validated_data['campus_id'] = data['campus_id']
+
             self.model.update_review(review_id, validated_data)
             return jsonify({"message": "Reseña actualizada"}), 200
 
@@ -118,6 +128,7 @@ class ReviewRoutes:
             return jsonify({"error": "Datos inválidos", "details": ve.messages}), 400
         except Exception as e:
             return jsonify({"error": str(e)}), 500
+
 
     def delete_review_route(self, review_id):
         """

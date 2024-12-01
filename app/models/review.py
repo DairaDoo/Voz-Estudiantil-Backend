@@ -33,9 +33,8 @@ class ReviewModel:
             raise Exception(f"Error al obtener la reseña: {e}")
         
     def get_all_reviews_with_names(self):
-        """"Ruta que devuelve todos los reviews pero aquí en vez de retornar los id devuelve los nombres asociados a otras tablas."""
         """
-        Obtiene todas las reseñas con los nombres de las universidades y usuarios en lugar de sus IDs.
+        Obtiene todas las reseñas con los nombres de las universidades, usuarios y campus.
         """
         try:
             with self.connection.cursor(cursor_factory=RealDictCursor) as cursor:
@@ -49,23 +48,27 @@ class ReviewModel:
                         r.down_vote,
                         r.state,
                         u.name AS user_name,
-                        un.name AS university_name
+                        un.name AS university_name,
+                        c.name AS campus_name  -- Nombre del campus
                     FROM 
                         Review r
                     INNER JOIN 
                         users u ON r.user_id = u.user_id
                     INNER JOIN 
                         universities un ON r.university_id = un.university_id
+                    LEFT JOIN 
+                        campus c ON r.campus_id = c.id  -- JOIN con la tabla campuses
                 """)
                 return cursor.fetchall()
         except psycopg2.Error as e:
-            raise Exception(f"Error al obtener las reseñas: {e}")
+            raise Exception(f"Error al obtener las reseñas con nombres: {e}")
+
 
 
     def create_review(self, review_data):
         query = """
-        INSERT INTO Review (review, user_id, image_name, create_date, up_vote, down_vote, university_id, state)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        INSERT INTO Review (review, user_id, image_name, create_date, up_vote, down_vote, university_id, state, campus_id)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING review_id
         """
         try:
@@ -78,12 +81,14 @@ class ReviewModel:
                     review_data.get('up_vote', 0),
                     review_data.get('down_vote', 0),
                     review_data['university_id'],
-                    review_data['state']
+                    review_data['state'],
+                    review_data.get('campus_id', None)  # Aquí tomamos el campus_id, que puede ser nulo
                 ))
                 self.connection.commit()
                 return cursor.fetchone()[0]
         except psycopg2.Error as e:
             raise Exception(f"Error al crear la reseña: {e}")
+
 
 
     def update_review(self, review_id, review_data):
