@@ -145,6 +145,7 @@ class ReviewRoutes:
             return jsonify({"error": str(e)}), 500
         
     
+    @token_required
     def update_review_votes_route(self, review_id):
         """
         Actualiza los votos de una reseña (up_vote o down_vote).
@@ -156,10 +157,14 @@ class ReviewRoutes:
             if vote_type not in ['up', 'down']:
                 return jsonify({"error": "Tipo de voto inválido"}), 400
 
+            # Registra información útil para depurar
+            print(f"User ID: {request.user_id} está votando '{vote_type}' en la reseña {review_id}")
+
             self.model.update_votes(review_id, vote_type)
             return jsonify({"message": f"{vote_type}_vote actualizado correctamente"}), 200
         except Exception as e:
             return jsonify({"error": str(e)}), 500
+
 
         
     def get_review_votes_route(self, review_id):
