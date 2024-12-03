@@ -21,6 +21,7 @@ class ReviewSchema(Schema):
         required=True,
         error_messages={"required": "El estado es obligatorio."}
     )
+    campus_id = fields.Int(allow_none=True)  # Este campo es opcional (puede ser nulo)
 
     @validates("state")
     def validate_state(self, value):
@@ -30,7 +31,7 @@ class ReviewSchema(Schema):
         allowed_states = ["pendiente", "aprobado", "rechazado"]
         if value.lower() not in allowed_states:
             raise ValidationError(f"Estado no válido. Debe ser uno de: {', '.join(allowed_states)}.")
-
+    
     @validates("review")
     def validate_review_content(self, value):
         """
@@ -38,3 +39,4 @@ class ReviewSchema(Schema):
         """
         if not value.strip():
             raise ValidationError("La reseña no puede estar vacía.")
+

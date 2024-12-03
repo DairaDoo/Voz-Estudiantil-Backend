@@ -50,5 +50,26 @@ ESTO ES PARA AUTOINCREMENTO DEL ID.
 
 ----------------------------------------------------
 
+CAMPUS AÑADIDO A TABLA REVIEW PARA IDENTIFICAR LOS RECINTOS.
 
-???
+1. ALTER TABLE review
+    ADD COLUMN campus_id INT;
+
+2. UPDATE review
+    SET campus_id = (
+        SELECT id
+        FROM campus
+        WHERE university_id = 1
+        LIMIT 1
+    );
+
+3. ALTER TABLE review
+    ADD CONSTRAINT fk_review_campus
+    FOREIGN KEY (campus_id)
+    REFERENCES campus(id) -- Cambia "id" por el nombre correcto si es diferente
+    ON DELETE SET NULL;
+
+
+
+------------------------------------------------------
+isIdentity AÑADIDO EN EL CAMPUS_ID EN LA TABLA CAMPUS
