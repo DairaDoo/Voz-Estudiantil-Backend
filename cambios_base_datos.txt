@@ -1,0 +1,54 @@
+10 DE NOVIEMBRE 2024
+
+IS IDENTYTY AÑADIDO A user_id de la tabla users
+esto es para que se autoincremente y no tener que 
+añadirle su id manualmente o evitar la necesidad
+de pasarle un id al crear un user.
+
+
+--------------------------------
+
+20 NOVIEMBRE DE 2024
+---------------------------------   
+Resumen de cambios realizados
+Creación del tipo enumerado state_enum en PostgreSQL:
+
+Se creó el tipo enumerado state_enum con los valores 'pendiente', 'aprobado' y 'rechazado':
+sql
+Copiar código
+CREATE TYPE state_enum AS ENUM ('pendiente', 'aprobado', 'rechazado');
+Modificación de la tabla universities:
+
+Se añadió una nueva columna state a la tabla universities con el tipo state_enum, un valor por defecto de 'pendiente', y no se permite que sea nulo:
+sql
+Copiar código
+ALTER TABLE universities
+ADD COLUMN state state_enum DEFAULT 'pendiente' NOT NULL;
+Actualización del estado de la primera universidad:
+
+Se cambió el estado de la universidad con university_id = 1 a 'aprobado':
+sql
+Copiar código
+UPDATE universities
+SET state = 'aprobado'
+WHERE university_id = 1;
+Verificación de los cambios realizados:
+
+Se verificaron los cambios mediante la consulta:
+sql
+Copiar código
+SELECT university_id, name, state
+FROM universities
+WHERE university_id = 1;
+
+---------------------------------------------------
+
+24 NOVIEMBRE DE 2024
+
+IS IDENTITY AÑADIDO A review_id de la tabla Review.
+ESTO ES PARA AUTOINCREMENTO DEL ID.
+
+----------------------------------------------------
+
+
+???

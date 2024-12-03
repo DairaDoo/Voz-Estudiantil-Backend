@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://voz_estudiantil_user:voz_estudiantil_password@db:5432/voz_estudiantil_db_hd1d
+    volumes:
+      - .:/app
+    restart: always

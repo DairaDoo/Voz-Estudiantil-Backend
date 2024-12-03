@@ -1,0 +1,33 @@
+Flujo de trabajo:
+
+Modelos: Las funciones para interactuar con la base de datos (insertar, actualizar, eliminar, leer) se encuentran en los archivos dentro de /models.
+
+Rutas: Las rutas o controladores en /routes manejan las solicitudes HTTP y validan los datos antes de llamarlos en los modelos.
+
+Schemas: Si utilizas validación (por ejemplo, con Marshmallow), los esquemas de validación se encuentran en /schemas.
+
+Conexión a la base de datos: Se maneja en el archivo db.py en /utils, donde defines la conexión a la base de datos usando psycopg2
+
+Descripción de los directorios y archivos:
+
+/app: Contiene el código principal de la aplicación Flask.
+
+/models: Aquí defines las funciones que realizan las operaciones CRUD en la base de datos (con psycopg2).
+
+/routes: Contiene los controladores (rutas) que manejan las solicitudes HTTP, validan los datos y llaman a los modelos para interactuar con la base de datos.
+
+/schemas: Define los esquemas de validación de datos. Puedes usar bibliotecas como Marshmallow para la validación de los datos de entrada.
+
+/utils: Aquí puedes poner funciones utilitarias, como la conexión a la base de datos.
+
+config.py: Contiene la configuración global de la aplicación, como las configuraciones de la base de datos o las variables de entorno.
+
+/instance: Puedes usar esta carpeta para almacenar la base de datos de desarrollo, si usas SQLite en lugar de PostgreSQL. Generalmente se usa para cosas específicas de la instancia de la app.
+
+/venv: El entorno virtual donde se instalan las dependencias del proyecto. Este directorio debe estar incluido en tu .gitignore para evitar subirlo al control de versiones.
+
+docker-compose.yml y Dockerfile: Los archivos de Docker para crear el contenedor y configurar la infraestructura.
+
+requirements.txt: Este archivo contiene las dependencias del proyecto, como Flask, psycopg2, Marshmallow, etc.
+
+.env: Puedes almacenar aquí las variables de entorno, como las credenciales de la base de datos, claves secretas, etc.
