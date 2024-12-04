@@ -70,7 +70,7 @@ def get_user_by_email(email):
         connection = get_db_connection()  # Reemplaza con tu conexión a la base de datos
         cursor = connection.cursor()
 
-        query = sql.SQL("SELECT user_id, email, password, name FROM users WHERE email = %s")
+        query = sql.SQL("SELECT user_id, email, password, name, university_id FROM users WHERE email = %s")
         cursor.execute(query, (email,))
         
         user = cursor.fetchone()  # Esto devuelve una fila con los datos del usuario
@@ -86,7 +86,8 @@ def get_user_by_email(email):
                 "user_id": user[0],
                 "email": user[1],
                 "password": user[2],  # Aquí debe ser un string
-                "name": user[3]
+                "name": user[3],
+                "university_id": user[4]
             }
         return None  # Si no hay usuario, devolver None
     except Exception as e:

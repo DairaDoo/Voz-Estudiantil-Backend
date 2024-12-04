@@ -76,6 +76,7 @@ class UserRoutes:
                 # Generar un token JWT
                 payload = {
                     "user_id": user['user_id'],
+                    "university_id": user.get('university_id'),  # Incluir university_id en el token
                     "exp": datetime.utcnow() + timedelta(hours=24)
                 }
                 token = jwt.encode(payload, secret_key, algorithm="HS256")
@@ -84,7 +85,8 @@ class UserRoutes:
                     "message": "Log in exitoso",
                     "token": token,
                     "user_id": user['user_id'],
-                    "name": user['name']
+                    "name": user['name'],
+                    "university_id": user.get('university_id')  # Incluir university_id en la respuesta JSON
                 }), 200
             else:
                 return jsonify({"error": "Credenciales incorrectas"}), 401
@@ -93,6 +95,7 @@ class UserRoutes:
             return jsonify({"error": "Datos inválidos", "details": ve.messages}), 400
         except Exception as e:
             return jsonify({"error": "Error interno del servidor", "details": str(e)}), 500
+
 
 
     def ruta_falsa(self):
