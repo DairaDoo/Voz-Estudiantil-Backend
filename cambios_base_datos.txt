@@ -73,3 +73,8 @@ CAMPUS AÑADIDO A TABLA REVIEW PARA IDENTIFICAR LOS RECINTOS.
 
 ------------------------------------------------------
 isIdentity AÑADIDO EN EL CAMPUS_ID EN LA TABLA CAMPUS
+
+
+-------------------------------------------------------
+
+isIdentity AÑADIDO AL PROFESSOR_ID EN LA TABLA PROFESSORS.

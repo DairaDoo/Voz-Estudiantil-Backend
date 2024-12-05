@@ -4,6 +4,7 @@ from app.routes.user_routes import user_routes  # Registra el Blueprint de las r
 from app.routes.review_routes import review_routes
 from app.routes.university_routes import university_routes
 from app.routes.campus_routes import campus_routes
+from app.routes.professors_routes import professor_routes  # Agregar la importación de profesor
 from flask_cors import CORS
 import cloudinary
 
@@ -22,6 +23,7 @@ app.register_blueprint(user_routes)
 app.register_blueprint(review_routes)
 app.register_blueprint(university_routes)
 app.register_blueprint(campus_routes)
+app.register_blueprint(professor_routes)  # Registra el Blueprint de los profesores
 
 # Inicia la aplicación
 if __name__ == "__main__":
