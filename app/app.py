@@ -7,8 +7,8 @@ from app.routes.department_route import department_routes
 from app.routes.campus_routes import campus_routes
 from app.routes.professors_routes import professor_routes  # Agregar la importación de profesor
 from app.routes.department_route import department_routes
-from app.routes.questions_route import questions_routes
-from app.routes.events_route import events_routes
+from app.routes.professor_questions_routes import professor_question_routes
+from app.routes.professors_responses_route import professor_response_routes
 from flask_cors import CORS
 import cloudinary
 
@@ -29,8 +29,8 @@ app.register_blueprint(university_routes)
 app.register_blueprint(campus_routes)
 app.register_blueprint(department_routes)
 app.register_blueprint(professor_routes)  # Registra el Blueprint de los profesores
-app.register_blueprint(questions_routes)
-app.register_blueprint(event_routes)
+app.register_blueprint(professor_question_routes)
+app.register_blueprint(professor_response_routes)
 
 # Inicia la aplicación
 if __name__ == "__main__":

@@ -83,3 +83,7 @@ isIdentity AÑADIDO AL PROFESSOR_ID EN LA TABLA PROFESSORS.
 -------------------------------------------------------
 
 isIdentity AÑADIDO AL Deparment_id EN LA TABLA DEPARTMENTS.
+
+-------------------------------------------------------
+
+isIdentity AÑADIDO AL responses_id EN LA TABLA professor_responses.
