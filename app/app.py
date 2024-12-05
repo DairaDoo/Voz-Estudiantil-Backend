@@ -3,6 +3,7 @@ from config import Config
 from app.routes.user_routes import user_routes  # Registra el Blueprint de las rutas de usuario
 from app.routes.review_routes import review_routes
 from app.routes.university_routes import university_routes
+from app.routes.department_route import department_routes
 from app.routes.campus_routes import campus_routes
 from app.routes.professors_routes import professor_routes  # Agregar la importación de profesor
 from app.routes.department_route import department_routes

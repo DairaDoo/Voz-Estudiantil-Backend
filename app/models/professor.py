@@ -91,12 +91,22 @@ class Professor:
         
     def get_all_professors(self):
         """
-        Obtiene todos los profesores con el nombre del departamento.
+        Obtiene todos los profesores con el nombre del departamento, universidad y campus.
         """
         query = """
-        SELECT p.professors_id, p.name, p.department_id, p.overall_rating, p.state, d.name as department_name
+        SELECT 
+            p.professors_id, 
+            p.name, 
+            p.department_id, 
+            p.overall_rating, 
+            p.state, 
+            d.name AS department_name, 
+            u.name AS university_name,
+            c.name AS campus_name
         FROM professors p
-        LEFT JOIN department d ON p.department_id = d.department_id;
+        LEFT JOIN department d ON p.department_id = d.department_id
+        LEFT JOIN universities u ON d.university_id = u.university_id
+        LEFT JOIN campus c ON d.university_id = c.university_id;
         """
         try:
             with self.conn.cursor() as cursor:
@@ -111,8 +121,11 @@ class Professor:
                     "department_id": row[2],
                     "overall_rating": row[3],
                     "state": row[4],
-                    "department_name": row[5]  # Aquí agregamos el nombre del departamento
+                    "department_name": row[5],
+                    "university_name": row[6],
+                    "campus_name": row[7]  # Agregamos el nombre del campus
                 })
             return professors
         except Exception as e:
             raise Exception(f"Error al obtener todos los profesores: {e}")
+
