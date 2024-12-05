@@ -22,6 +22,7 @@ app.register_blueprint(user_routes)
 app.register_blueprint(review_routes)
 app.register_blueprint(university_routes)
 app.register_blueprint(campus_routes)
+app.register_blueprint(department_routes)
 
 # Inicia la aplicación
 if __name__ == "__main__":
