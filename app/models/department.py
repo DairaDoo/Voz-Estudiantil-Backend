@@ -1,11 +1,10 @@
 import psycopg2
 from app.utils.db_connection import get_db_connection
 
-def create_department(department_id, name, university_id):
+def create_department(name, university_id):
     """
     Crea un nuevo departamento en la base de datos.
     
-    :param department_id: ID único del departamento.
     :param name: Nombre del departamento (máximo 50 caracteres).
     :param university_id: ID de la universidad asociada.
     """
@@ -14,13 +13,13 @@ def create_department(department_id, name, university_id):
         connection = get_db_connection()
         cursor = connection.cursor()
 
-        # Query para insertar un nuevo departamento
+        # Query para insertar un nuevo departamento sin department_id
         query = """
-        INSERT INTO Department (department_id, name, university_id)
-        VALUES (%s, %s, %s)
+        INSERT INTO department (name, university_id)
+        VALUES (%s, %s)
         RETURNING department_id;
         """
-        cursor.execute(query, (department_id, name, university_id))
+        cursor.execute(query, (name, university_id))
         connection.commit()
 
         # Obtén el ID del departamento recién insertado
@@ -50,7 +49,7 @@ def get_all_departments():
         # Query para seleccionar todos los departamentos
         query = """
         SELECT department_id, name, university_id 
-        FROM Department;
+        FROM department;
         """
         cursor.execute(query)
         departments = cursor.fetchall()
