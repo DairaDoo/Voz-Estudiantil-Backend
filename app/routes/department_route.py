@@ -1,3 +1,4 @@
+from app.models.professor import Professor
 from flask import Blueprint, jsonify, request
 from app.models.department import (
     get_all_departments,
@@ -30,6 +31,9 @@ class DepartmentRoutes:
         )
         self.blueprint.add_url_rule(
             '/departments/<int:department_id>', view_func=self.delete_department_route, methods=['DELETE']
+        )
+        self.blueprint.add_url_rule(
+            '/professors/all', view_func=self.get_all_professors_route, methods=['GET']
         )
 
     def get_departments_route(self):
@@ -107,6 +111,20 @@ class DepartmentRoutes:
             return jsonify(deleted_department), 200
         except Exception as e:
             return jsonify({"error": "Error al eliminar el departamento", "details": str(e)}), 500
+        
+    def get_all_professors_route(self):
+        """Endpoint para obtener todos los profesores con detalles legibles."""
+        try:
+            professor = Professor()
+            results = professor.get_all_professors()
+
+            if not results:
+                return jsonify({"message": "No se encontraron profesores"}), 404
+
+            return jsonify({"professors": results}), 200
+
+        except Exception as e:
+            return jsonify({"error": "Error al obtener los profesores", "details": str(e)}), 500
 
 
 # Inicializar y exportar las rutas

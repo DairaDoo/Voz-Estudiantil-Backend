@@ -15,8 +15,8 @@ def create_department(name, university_id):
 
         # Query para insertar un nuevo departamento sin department_id
         query = """
-        INSERT INTO department (name, university_id)
-        VALUES (%s, %s)
+        INSERT INTO Department (department_id, name, university_id)
+        VALUES (%s, %s, %s)
         RETURNING department_id;
         """
         cursor.execute(query, (name, university_id))
@@ -117,7 +117,7 @@ def update_department(department_id, name=None, university_id=None):
         cursor = connection.cursor()
 
         # Query dinámica para actualizar un departamento
-        query = "UPDATE Department SET "
+        query = "UPDATE department SET "
         updates = []
         params = []
 
@@ -166,7 +166,7 @@ def delete_department(department_id):
 
         # Query para eliminar un departamento
         query = """
-        DELETE FROM Department
+        DELETE FROM department
         WHERE department_id = %s
         RETURNING department_id;
         """
