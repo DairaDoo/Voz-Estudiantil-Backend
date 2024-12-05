@@ -9,6 +9,7 @@ from app.routes.professors_routes import professor_routes  # Agregar la importac
 from app.routes.department_route import department_routes
 from app.routes.professor_questions_routes import professor_question_routes
 from app.routes.professors_responses_route import professor_response_routes
+from app.routes.event_routes import event_routes
 from flask_cors import CORS
 import cloudinary
 
@@ -31,6 +32,7 @@ app.register_blueprint(department_routes)
 app.register_blueprint(professor_routes)  # Registra el Blueprint de los profesores
 app.register_blueprint(professor_question_routes)
 app.register_blueprint(professor_response_routes)
+app.register_blueprint(event_routes)
 
 # Inicia la aplicación
 if __name__ == "__main__":
