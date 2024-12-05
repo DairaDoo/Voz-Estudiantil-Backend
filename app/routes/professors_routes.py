@@ -7,7 +7,6 @@ class ProfessorRoutes:
         self._register_routes()
 
     def _register_routes(self):
-        """Registra las rutas asociadas con los profesores."""
         self.blueprint.add_url_rule(
             '/professors', view_func=self.create_professor_route, methods=['POST']
         )
@@ -20,9 +19,11 @@ class ProfessorRoutes:
         self.blueprint.add_url_rule(
             '/professors/<int:professor_id>', view_func=self.delete_professor_route, methods=['DELETE']
         )
+        self.blueprint.add_url_rule(
+            '/professors/all', view_func=self.get_all_professors_route, methods=['GET']
+        )
 
     def create_professor_route(self):
-        """Endpoint para crear un nuevo profesor."""
         try:
             data = request.get_json()
             name = data.get('name')
@@ -33,7 +34,6 @@ class ProfessorRoutes:
             if not name or not department_id or overall_rating is None:
                 return jsonify({"error": "Los campos 'name', 'department_id' y 'overall_rating' son obligatorios."}), 400
 
-            # Llamar al modelo para crear el profesor
             professor = Professor()
             professor_id = professor.create_professor(name, department_id, overall_rating, state)
 
@@ -43,7 +43,6 @@ class ProfessorRoutes:
             return jsonify({"error": "Error al crear el profesor", "details": str(e)}), 500
 
     def get_professor_route(self, professor_id):
-        """Endpoint para obtener un profesor por su ID."""
         try:
             professor = Professor()
             result = professor.get_professor(professor_id)
@@ -57,7 +56,6 @@ class ProfessorRoutes:
             return jsonify({"error": "Error al obtener el profesor", "details": str(e)}), 500
 
     def update_professor_route(self, professor_id):
-        """Endpoint para actualizar los detalles de un profesor."""
         try:
             data = request.get_json()
             name = data.get('name')
@@ -77,7 +75,6 @@ class ProfessorRoutes:
             return jsonify({"error": "Error al actualizar el profesor", "details": str(e)}), 500
 
     def delete_professor_route(self, professor_id):
-        """Endpoint para eliminar un profesor por su ID."""
         try:
             professor = Professor()
             rows_deleted = professor.delete_professor(professor_id)
@@ -89,6 +86,20 @@ class ProfessorRoutes:
 
         except Exception as e:
             return jsonify({"error": "Error al eliminar el profesor", "details": str(e)}), 500
+
+    def get_all_professors_route(self):
+        """Endpoint para obtener todos los profesores con el nombre del departamento."""
+        try:
+            professor = Professor()
+            results = professor.get_all_professors()
+
+            if not results:
+                return jsonify({"message": "No se encontraron profesores"}), 404
+
+            return jsonify({"professors": results}), 200
+
+        except Exception as e:
+            return jsonify({"error": "Error al obtener los profesores", "details": str(e)}), 500
 
 # Inicializar y exportar las rutas
 professor_routes = ProfessorRoutes().blueprint
