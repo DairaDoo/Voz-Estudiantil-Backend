@@ -12,6 +12,7 @@ class CampusRoutes:
             '/campuses', view_func=self.get_campuses_route, methods=['GET']
         )
 
+
     def get_campuses_route(self):
         """
         Endpoint para obtener los nombres de los campus asociados a una universidad.

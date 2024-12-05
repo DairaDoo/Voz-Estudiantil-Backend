@@ -62,14 +62,15 @@ class DepartmentRoutes:
         """
         try:
             data = request.get_json()
-            department_id = data.get('department_id')
             name = data.get('name')
             university_id = data.get('university_id')
 
-            if not department_id or not name or not university_id:
+            # Validar que se proporcionen los campos requeridos
+            if not name or not university_id:
                 return jsonify({"error": "Faltan datos requeridos"}), 400
 
-            new_department = create_department(department_id, name, university_id)
+            # Crear el departamento (sin enviar department_id)
+            new_department = create_department(name=name, university_id=university_id)
             return jsonify(new_department), 201
         except Exception as e:
             return jsonify({"error": "Error al crear el departamento", "details": str(e)}), 500
