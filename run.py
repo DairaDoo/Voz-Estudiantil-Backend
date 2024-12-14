@@ -1,3 +1,4 @@
+#/run.py
 from app.app import app  # Asegúrate de importar la aplicación correctamente
 
 if __name__ == "__main__":

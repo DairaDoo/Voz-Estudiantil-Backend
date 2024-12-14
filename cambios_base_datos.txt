@@ -91,3 +91,7 @@ isIdentity AÑADIDO AL responses_id EN LA TABLA professor_responses.
 -------------------------------------------------------
 
 isIdentity AÑADIDO AL event_id EN LA TABLA events.
+
+-------------------------------------------------------
+
+isIdentity AÑADIDO AL comment_id EN LA TABLA comments.
